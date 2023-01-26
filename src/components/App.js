@@ -3,14 +3,14 @@ import "../styles/App.css";
 import WeatherInfo from "./WeatherInfo";
 
 function App() {
-  const [city, setCity] = useState([]);
+  const [cities, setCities] = useState([]);
   const [search, setSearch] = useState("Moscow");
   const [error, setError] = useState("");
-  function onEnter(event) {
+  const onEnter = (event) => {
     if (event.key === "Enter") {
       fetchAPI();
     }
-  }
+  };
   const fetchAPI = async () => {
     if (!search) {
       return;
@@ -20,7 +20,7 @@ function App() {
     );
     const resJSON = await res.json();
     if (res.ok) {
-      setCity([...city, resJSON]);
+      setCities([...cities, resJSON]);
       setSearch("");
     } else {
       setError(resJSON.error.message);
@@ -61,7 +61,7 @@ function App() {
       </div>
       <div className="error">{error}</div>
       <div>
-        {city.map((data) => (
+        {cities.map((data) => (
           <WeatherInfo key={data.location.tz_id} data={data} />
         ))}
       </div>
